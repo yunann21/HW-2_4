@@ -9,36 +9,42 @@ import UIKit
 
 final class ViewController: UIViewController {
 
-    @IBOutlet var colorValuesLabels: [UILabel]!
+    @IBOutlet var redLabelValue: UILabel!
+    @IBOutlet var greenLabelValue: UILabel!
+    @IBOutlet var blueLabelValue: UILabel!
+    
+    
+    @IBOutlet var redSliderValue: UISlider!
+    @IBOutlet var greenSliderValue: UISlider!
+    @IBOutlet var blueSliderValue: UISlider!
+    
     @IBOutlet var colorView: UIView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        setLabelColor(redSliderValue)
+        getViewColor()
+        colorView.layer.cornerRadius = 30
     }
-
-    @IBAction func sliderChanged(_ sender: UISlider) {
-        let label = colorValuesLabels[sender.tag]
-        label.text = String(format: "%.2f", sender.value)
+    
+    @IBAction func setLabelColor(_ sender: UISlider) {
+        redLabelValue.text = String(format: "%.2f", redSliderValue.value)
+        greenLabelValue.text = String(format: "%.2f", greenSliderValue.value)
+        blueLabelValue.text = String(format: "%.2f", blueSliderValue.value)
         
-        var colors: [CGFloat] = []
-        colorValuesLabels.forEach { label in
-            colors.append(CGFloat(Float(label.text ?? "0") ?? 0))
-        }
-        
+        getViewColor()
+    }
+    
+    func getViewColor() {
         colorView.backgroundColor = UIColor(
-            red: colors[0],
-            green: colors[1],
-            blue: colors[2],
+            red: CGFloat(redSliderValue.value),
+            green: CGFloat(greenSliderValue.value),
+            blue: CGFloat(blueSliderValue.value),
             alpha: 1
         )
     }
     
-    private func setupUI() {
-        colorView.layer.cornerRadius = 20
-
-    }
     
 }
 
